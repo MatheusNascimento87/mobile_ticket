@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>Atendente - Sistema de Chamadas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/totem">
+        <ion-icon slot="start" name="ticket"></ion-icon>
+        <ion-label>Totem</ion-label>
+      </ion-button>
+      <ion-button routerLink="/painel">
+        <ion-icon slot="start" name="tv"></ion-icon>
+        <ion-label>Painel</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="atendente-container">
+    <ion-card class="config-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="settings"></ion-icon>
+          Configuração do Guichê
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">
+            <ion-icon name="desktop"></ion-icon>
+            Número do Guichê
+          </ion-label>
+          <ion-input 
+            type="number" 
+            [(ngModel)]="desk"
+            min="1"
+            placeholder="Digite o número do guichê">
+          </ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Ordem de Atendimento</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <ion-icon name="information-circle"></ion-icon>
+          A sequência de chamada segue o padrão:
+        </p>
+        <div class="sequence-display">
+          <ion-badge color="danger">SP</ion-badge>
+          <ion-icon name="arrow-forward"></ion-icon>
+          <ion-badge color="success">SE</ion-badge>
+          <span>ou</span>
+          <ion-badge color="primary">SG</ion-badge>
+          <ion-icon name="arrow-forward"></ion-icon>
+          <ion-badge color="danger">SP</ion-badge>
+          <ion-icon name="arrow-forward"></ion-icon>
+          <span>...</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="buttons-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="call"></ion-icon>
+          Chamar Próxima Senha
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4">
+              <ion-button 
+                expand="block" 
+                size="large"
+                color="danger"
+                (click)="call('SP')"
+                class="call-button">
+                <ion-icon name="alert-circle" slot="start"></ion-icon>
+                Chamar Prioritária (SP)
+              </ion-button>
+              <ion-note class="button-note">
+                Tempo médio: 10-20 min
+              </ion-note>
+            </ion-col>
+
+            <ion-col size="12" size-md="4">
+              <ion-button 
+                expand="block" 
+                size="large"
+                color="success"
+                (click)="call('SE')"
+                class="call-button">
+                <ion-icon name="document-text" slot="start"></ion-icon>
+                Chamar Exames (SE)
+              </ion-button>
+              <ion-note class="button-note">
+                Tempo médio: &lt; 1 min
+              </ion-note>
+            </ion-col>
+
+            <ion-col size="12" size-md="4">
+              <ion-button 
+                expand="block" 
+                size="large"
+                color="primary"
+                (click)="call('SG')"
+                class="call-button">
+                <ion-icon name="people" slot="start"></ion-icon>
+                Chamar Geral (SG)
+              </ion-button>
+              <ion-note class="button-note">
+                Tempo médio: 2-8 min
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="lastCalled" class="called-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          Última Senha Chamada
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-text-center">
+        <h1 class="ticket-number">{{ lastCalled.id }}</h1>
+        <ion-badge [color]="getTicketColor(lastCalled.type)" class="type-badge">
+          {{ getTicketTypeName(lastCalled.type) }}
+        </ion-badge>
+        <div class="call-details">
+          <p>
+            <ion-icon name="desktop"></ion-icon>
+            <strong>Guichê:</strong> {{ lastCalled.desk }}
+          </p>
+          <p>
+            <ion-icon name="time"></ion-icon>
+            <strong>Horário da chamada:</strong> {{ lastCalled.calledAt | date : 'HH:mm:ss' }}
+          </p>
+          <p>
+            <ion-icon name="calendar"></ion-icon>
+            <strong>Data:</strong> {{ lastCalled.calledAt | date : 'dd/MM/yyyy' }}
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="!lastCalled" class="waiting-card">
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="hourglass" size="large" color="medium"></ion-icon>
+        <p>Aguardando chamada...</p>
+        <p class="hint">Clique em um dos botões acima para chamar a próxima senha</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="warning-card" color="warning">
+      <ion-card-content>
+        <ion-icon name="warning"></ion-icon>
+        <strong>Atenção:</strong> Certifique-se de que o número do guichê está correto antes de chamar senhas.
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center" size="small">
+      Guichê {{ desk }} | Horário: 07:00 às 17:00
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

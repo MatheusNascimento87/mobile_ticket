@@ -1,0 +1,46 @@
+.totem-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ticket-button {
+  margin: 16px 0;
+  height: 80px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.info-card {
+  margin: 20px 0;
+}
+
+.ticket-card {
+  margin-top: 30px;
+  border: 2px solid var(--ion-color-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  margin: 20px 0;
+  letter-spacing: 2px;
+}
+
+.ticket-info {
+  margin: 8px 0;
+  font-size: 0.95rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+ion-note {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+}

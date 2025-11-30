@@ -1,0 +1,101 @@
+.painel-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-card {
+  background: linear-gradient(135deg, var(--ion-color-secondary) 0%, var(--ion-color-secondary-shade) 100%);
+  color: white;
+  margin-bottom: 24px;
+
+  ion-card-title {
+    font-size: 1.8rem;
+    padding: 20px 0;
+
+    ion-icon {
+      color: white;
+    }
+  }
+}
+
+.empty-card {
+  margin: 40px 0;
+  padding: 40px 0;
+}
+
+.called-card {
+  height: 100%;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  &.latest-call {
+    border-color: var(--ion-color-secondary);
+    box-shadow: 0 4px 16px rgba(var(--ion-color-secondary-rgb), 0.3);
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(var(--ion-color-secondary-rgb), 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(var(--ion-color-secondary-rgb), 0.5);
+  }
+}
+
+.position-badge {
+  margin-left: 8px;
+}
+
+.ticket-display {
+  text-align: center;
+}
+
+.ticket-id {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  margin: 16px 0;
+  letter-spacing: 1px;
+}
+
+.ticket-details {
+  margin-top: 16px;
+  text-align: left;
+
+  p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+
+    ion-icon {
+      margin-right: 8px;
+      color: var(--ion-color-medium);
+    }
+
+    strong {
+      margin-right: 8px;
+    }
+  }
+}
+
+.info-card {
+  margin-top: 24px;
+  background-color: var(--ion-color-light);
+
+  ion-col {
+    padding: 16px;
+
+    p {
+      margin-top: 8px;
+      font-weight: 500;
+    }
+  }
+}

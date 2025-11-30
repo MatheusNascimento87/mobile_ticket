@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Painel de Chamadas - Laboratório Médico</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/totem">
+        <ion-icon slot="start" name="ticket"></ion-icon>
+        <ion-label>Totem</ion-label>
+      </ion-button>
+      <ion-button routerLink="/atendente">
+        <ion-icon slot="start" name="person"></ion-icon>
+        <ion-label>Atendente</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="painel-container">
+    <ion-card class="header-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          <ion-icon name="notifications" size="large"></ion-icon>
+          <br>
+          Últimas 5 Senhas Chamadas
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngIf="lastFive.length === 0" class="empty-card">
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="hourglass" size="large" color="medium"></ion-icon>
+        <p>Aguardando chamadas...</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-grid *ngIf="lastFive.length > 0">
+      <ion-row>
+        <ion-col 
+          size="12" 
+          size-md="6" 
+          size-lg="4"
+          *ngFor="let t of lastFive; let i = index">
+          <ion-card 
+            class="called-card"
+            [ngClass]="{'latest-call': i === 0}">
+            <ion-card-header>
+              <ion-card-subtitle>
+                <ion-badge [color]="getTicketColor(t.type)">
+                  {{ getTicketTypeName(t.type) }}
+                </ion-badge>
+                <ion-badge color="light" class="position-badge" *ngIf="i === 0">
+                  Atual
+                </ion-badge>
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="ticket-display">
+                <h1 class="ticket-id">{{ t.id }}</h1>
+                
+                <div class="ticket-details">
+                  <p>
+                    <ion-icon name="desktop"></ion-icon>
+                    <strong>Guichê:</strong> {{ t.desk }}
+                  </p>
+                  <p>
+                    <ion-icon name="time"></ion-icon>
+                    <strong>Chamada:</strong> {{ t.calledAt | date : 'HH:mm:ss' }}
+                  </p>
+                  <p>
+                    <ion-icon name="calendar"></ion-icon>
+                    {{ t.calledAt | date : 'dd/MM/yyyy' }}
+                  </p>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card class="info-card">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="4" class="ion-text-center">
+              <ion-icon name="alert-circle" color="danger" size="large"></ion-icon>
+              <p><strong>SP</strong> - Prioritária</p>
+            </ion-col>
+            <ion-col size="12" size-md="4" class="ion-text-center">
+              <ion-icon name="people" color="primary" size="large"></ion-icon>
+              <p><strong>SG</strong> - Geral</p>
+            </ion-col>
+            <ion-col size="12" size-md="4" class="ion-text-center">
+              <ion-icon name="document-text" color="success" size="large"></ion-icon>
+              <p><strong>SE</strong> - Exames</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center" size="small">
+      Horário de atendimento: 07:00 às 17:00
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
